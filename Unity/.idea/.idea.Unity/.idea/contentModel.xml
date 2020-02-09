@@ -6,12 +6,12 @@
     <e p="D:\Awork\Accel_2020\UnityNativeStrategy\Unity" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Native" t="Include">
-          <e p="Helpers" t="Include">
-            <e p="Native.cs" t="Include" />
-            <e p="NativeDynamicImport.cs" t="Include" />
-            <e p="NativeStaticImport.cs" t="Include" />
-          </e>
+        <e p="ScriptsNative" t="Include">
+          <e p="Game.cs" t="Include" />
+          <e p="InputEvent.cs" t="Include" />
+          <e p="InputEventList.cs" t="Include" />
+          <e p="NativeFunctions.cs" t="Include" />
+          <e p="NativeRuntimeLoader.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
