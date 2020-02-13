@@ -1,33 +1,3 @@
-# Линки #
-
-## Алгоритмы
-[Алгоритмы + гексы](https://www.redblobgames.com/)
-[]()
-[]()
-
-## Unity
-[]()
-[]()
-[]()
-
-## Node js
-[Node js guide](https://learn.javascript.ru/screencast/nodejs)
-[GH WebSocket](https://github.com/websockets/ws)
-[]()
-[]()
-
-## C++
-[]()
-[]()
-[]()
-
-
-## Other
-[Websockets js](https://learn.javascript.ru/websocket)
-[]()
-[]()
-
-
 # Ironsphere #
 
 ![пикча](../pics/Ironsphere.JPG)

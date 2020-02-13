@@ -11,6 +11,11 @@
           <e p="Network" t="Include">
             <e p="WebSocketWrapper.cs" t="Include" />
           </e>
+          <e p="NetworkUseless" t="Include">
+            <e p="HttpVariousFeatures.cs" t="Include" />
+            <e p="SocketVariousFeatures.cs" t="Include" />
+            <e p="TcpVariousFeatures.cs" t="Include" />
+          </e>
         </e>
       </e>
       <e p="IronsphereClient.sln" t="IncludeFlat" />
