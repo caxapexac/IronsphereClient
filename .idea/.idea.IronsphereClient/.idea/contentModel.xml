@@ -66,7 +66,6 @@
               <e p="PlayRequest.cs" t="Include" />
               <e p="QuitRequest.cs" t="Include" />
               <e p="Requests" t="Include">
-                <e p="ConnectRequest.cs" t="Include" />
                 <e p="SignalRequest.cs" t="Include" />
               </e>
               <e p="RequestsInner" t="Include">

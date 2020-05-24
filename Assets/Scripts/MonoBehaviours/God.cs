@@ -26,9 +26,6 @@ namespace MonoBehaviours
         [HideInInspector]
         public List<Unit> SelectedUnits = new List<Unit>();
 
-        [HideInInspector]
-        public WebSocket Ws = null;
-
         public static God I = null;
 
         private void Awake()

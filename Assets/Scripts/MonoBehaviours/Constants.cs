@@ -2,7 +2,7 @@ namespace MonoBehaviours
 {
     public static class Constants
     {
-        public const int version = 102;
+        public const int version = 104;
         
     }
     

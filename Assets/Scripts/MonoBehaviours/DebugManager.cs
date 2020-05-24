@@ -1,4 +1,7 @@
 ﻿using System;
+using JsonSchemas;
+using Network;
+using Newtonsoft.Json;
 using UnityEngine;
 
 
@@ -9,6 +12,27 @@ namespace MonoBehaviours
         private void Start()
         {
             //JsonManager.TestNetwork();
+        }
+        
+        public void Update ()
+        {
+            
+        }
+
+        public void LogIn()
+        {
+            
+        }
+        
+        public void ServerInfo()
+        {
+            in_server_info data = new in_server_info();
+            NetworkManager.Ws.SendString(JsonManager.Serialize(data));
+        }
+        
+        public void GameInfo()
+        {
+            
         }
 
         public void Load (string input) 
@@ -50,12 +74,7 @@ namespace MonoBehaviours
         {
     
         }
-    
-        public void Update ()
-        {
-    
-        }
-    
+
         public void Signal (string input)
         {
     

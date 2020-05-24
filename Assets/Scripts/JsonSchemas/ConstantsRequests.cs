@@ -1,11 +1,18 @@
 using System.Collections.Generic;
+using MonoBehaviours;
+using UnityEngine;
 
 
 namespace JsonSchemas
 {
+    public class in_connect : j_typed
+    {
+        public string nickname;
+    }
+    
     public class in_signal : j_typed
     {
-        public int sender; // : int
+        public int sender = PlayerPrefs.GetInt(IntPrefs.sender.ToString()); // : int
     }
 
 

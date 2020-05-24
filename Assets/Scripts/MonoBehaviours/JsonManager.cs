@@ -20,13 +20,14 @@ namespace MonoBehaviours
             
         }
 
-        public static void TestNetwork()
+        public static string Serialize(j_typed typed)
         {
-            string d = JsonConvert.SerializeObject(new chat_message(){message = "abc"}, Converter);
-            Debug.Log(d);
-            j_typed typed = JsonConvert.DeserializeObject<j_typed>(d, Converter);
-            Debug.Log(JsonConvert.SerializeObject(typed, Converter));
-            Debug.Log(typed.GetType());
+            return JsonConvert.SerializeObject(typed, Converter);
+        }
+
+        public static j_typed Deserialize(string package)
+        {
+            return JsonConvert.DeserializeObject<j_typed>(package);
         }
     }
 }
