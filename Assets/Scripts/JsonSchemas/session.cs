@@ -7,7 +7,7 @@ namespace JsonSchemas
     {
         public string session_name; // : string?
         public List<int> players_uid; // : list<int>?
-        public ihandler state; // : ihandler
+        public string state; // : string
         public abstract_game game; // : abstract_game?
 
         public override void Execute()

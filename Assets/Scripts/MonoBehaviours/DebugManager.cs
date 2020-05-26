@@ -14,7 +14,13 @@ namespace MonoBehaviours
     {
         private void Start()
         {
-            
+            j_typed gi = new out_game_info();
+            string sgi = JsonManager.Serialize(gi);
+            j_typed jgi = JsonManager.Deserialize(sgi);
+            Debug.Log(sgi + " " + jgi.GetType());
+            string sgi2 = "{\"type\":\"out_game_info\"}";
+            j_typed jgi2 = JsonManager.Deserialize(sgi);
+            Debug.Log(sgi2 + " " + jgi2.GetType());
         }
         
         public void Update ()

@@ -68,12 +68,13 @@ namespace HelpersComponents
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            _button.interactable = PlayerPrefs.GetString(KeySholdExist.ToString()) != "";
+            _button.interactable = PlayerPrefsWrapper.Get(KeySholdExist) != 0;
             PlayerPrefsWrapper.IntPrefsChanged += ValueChanged;
         }
 
         private void ValueChanged(object sender, (IntPrefs, int) data)
         {
+            Debug.Log(data.Item1 + " " + data.Item2);
             if (data.Item1 == KeySholdExist) _button.interactable = data.Item2 != 0;
         }
 

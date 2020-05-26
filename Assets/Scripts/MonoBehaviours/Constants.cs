@@ -2,6 +2,7 @@ namespace MonoBehaviours
 {
     public static class Constants
     {
+        public const string Ip = "127.0.0.1:1109";
         public const int Version = 105;
         public const float SlowUpdateDelay = 3f;
     }

@@ -26,6 +26,7 @@ namespace HelpersConcreteComponents
 
         private void Start()
         {
+            ClearPanel();
             UpdateData();
         }
 
@@ -57,13 +58,16 @@ namespace HelpersConcreteComponents
 
                 // TODO
                 _instance.SessionData.text = "";
-                _instance.SessionData.text += "Users\n";
-                foreach (KeyValuePair<int, player> player in game.players)
-                {
-                    _instance.SessionData.text += $"{God.NetworkManager.GetUsernameById(player.Key)} team: {player.Value.team}\n";
-                }
                 _instance.SessionData.text += $"State {current.state.GetType()}\n";
-                _instance.SessionData.text += game.tilemap.GetData();
+                if (game != null)
+                {
+                    _instance.SessionData.text += "Users\n";
+                    foreach (KeyValuePair<int, player> player in game.players)
+                    {
+                        _instance.SessionData.text += $"{God.NetworkManager.GetUsernameById(player.Key)} team: {player.Value.team}\n";
+                    }
+                    _instance.SessionData.text += game.tilemap.GetData();
+                }
                 // TODO
             }
         }

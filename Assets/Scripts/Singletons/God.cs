@@ -1,4 +1,5 @@
-﻿using MonoBehaviours;
+﻿using System;
+using MonoBehaviours;
 using Static;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,8 +22,7 @@ namespace Singletons
             DontDestroyOnLoad(gameObject);
             I = this;
             NetworkManager = GetComponent<NetworkManager>();
-            // TODO
-            PlayerPrefs.SetString(StrPrefs.server_ip.ToString(), "127.0.0.1:1109");
+            PlayerPrefs.SetString(StrPrefs.server_ip.ToString(), Constants.Ip);
         }
     }
 }

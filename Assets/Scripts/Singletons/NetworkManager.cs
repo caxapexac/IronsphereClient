@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using HelpersConcreteComponents;
 using HybridWebSocket;
 using JsonSchemas;
 using MonoBehaviours;
@@ -13,11 +15,36 @@ namespace Singletons
 {
     public class NetworkManager : MonoBehaviour
     {
+        // Ws is working on another thread! 
         public WebSocket Ws = null;
 
-        public string Nickname; // Because is crashes if I try to get it in OnOpen
+        public ConcurrentQueue<string> EventQueue;
 
         public List<string> Users;
+
+        private void Awake()
+        {
+            EventQueue = new ConcurrentQueue<string>();
+        }
+
+        private void Start()
+        {
+            ConnectToServer();
+        }
+
+        private void Update()
+        {
+            if (!EventQueue.IsEmpty)
+            {
+                if (EventQueue.TryDequeue(out string result))
+                {
+                    Debug.Log("Try " + result);
+                    j_typed response = JsonManager.Deserialize(result);
+                    Debug.Log(response.GetType() + " " + result);
+                    response.Execute();
+                }
+            }
+        }
 
         public bool IsConnected()
         {
@@ -28,7 +55,6 @@ namespace Singletons
         {
             if (IsConnected()) return;
             string ip = PlayerPrefs.GetString(StrPrefs.server_ip.ToString());
-            Nickname = PlayerPrefs.GetString(StrPrefs.nickname.ToString());
 
             try
             {
@@ -51,7 +77,7 @@ namespace Singletons
         {
             if (!IsConnected())
             {
-                Debug.Log("You are not connected");
+                MessageBox.ShowError("You are not connected");
                 return;
             }
             Ws.SendString(message);
@@ -73,14 +99,12 @@ namespace Singletons
         private void WsOnOpen()
         {
             Debug.Log("WS opened");
-            in_connect.Send();
         }
 
         private void WsOnMessage (byte[] data)
         {
             string message = Encoding.UTF8.GetString(data);
-            j_typed response = JsonManager.Deserialize(message);
-            response.Execute();
+            EventQueue.Enqueue(message);
         }
 
         private void WsOnError (string errMsg)
@@ -95,7 +119,7 @@ namespace Singletons
 
         private void OnDestroy()
         {
-            if (IsConnected()) Ws.Close();
+            if (God.NetworkManager == this && IsConnected()) Ws.Close();
         }
     }
 }

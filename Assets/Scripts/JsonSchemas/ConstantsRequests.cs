@@ -9,10 +9,12 @@ namespace JsonSchemas
 {
     public class in_connect : j_typed
     {
+        public int version;
         public string nickname;
 
         protected in_connect()
         {
+            version = Constants.Version;
             nickname = PlayerPrefsWrapper.Get(StrPrefs.nickname);
         }
 
@@ -25,10 +27,12 @@ namespace JsonSchemas
     
     public class in_signal : j_typed
     {
+        public int version;
         public int sender; // : int
         
         protected in_signal()
         {
+            version = Constants.Version;
             sender = PlayerPrefs.GetInt(IntPrefs.sender.ToString());
         }
     }
