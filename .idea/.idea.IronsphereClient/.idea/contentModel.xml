@@ -41,8 +41,24 @@
               <e p="WebSocketWrapper.cs" t="Include" />
             </e>
             <e p="SelectionIndicator.cs" t="Include" />
-            <e p="Unit.cs" t="Include" />
-            <e p="UnitClickListener.cs" t="Include" />
+            <e p="SelectionManager.cs" t="Include" />
+            <e p="UnitManager.cs" t="Include" />
+          </e>
+          <e p="HelpersComponents" t="Include">
+            <e p="ButtonSceneLoader.cs" t="Include" />
+            <e p="ButtonToIntPlayerPrefsBinder.cs" t="Include" />
+            <e p="ButtonToStringPlayerPrefsBinder.cs" t="Include" />
+            <e p="InputFieldToPlayerPrefsBinder.cs" t="Include" />
+            <e p="TextToStringPlayerPrefsBinder.cs" t="Include" />
+          </e>
+          <e p="HelpersConcreteComponents" t="Include">
+            <e p="ChatScrollList.cs" t="Include" />
+            <e p="ChatScrollListItem.cs" t="Include" />
+            <e p="MessageBox.cs" t="Include" />
+            <e p="SessionInfoPanel.cs" t="Include" />
+            <e p="SessionScrollList.cs" t="Include" />
+            <e p="SessionScrollListItem.cs" t="Include" />
+            <e p="VersionTextUpdater.cs" t="Include" />
           </e>
           <e p="JsonSchemas" t="Include">
             <e p="abstract_game.cs" t="Include" />
@@ -59,37 +75,6 @@
             <e p="parameter_map.cs" t="Include" />
             <e p="player.cs" t="Include" />
             <e p="session.cs" t="Include" />
-            <e p="Temporary" t="Include">
-              <e p="JoinRequest.cs" t="Include" />
-              <e p="LoadRequest.cs" t="Include" />
-              <e p="PauseRequest.cs" t="Include" />
-              <e p="PlayRequest.cs" t="Include" />
-              <e p="QuitRequest.cs" t="Include" />
-              <e p="Requests" t="Include">
-                <e p="SignalRequest.cs" t="Include" />
-              </e>
-              <e p="RequestsInner" t="Include">
-                <e p="CreateSessionRequest.cs" t="Include" />
-                <e p="SessionRequest.cs" t="Include" />
-                <e p="WriteChatRequest.cs" t="Include" />
-              </e>
-              <e p="Responses" t="Include">
-                <e p="ConnectResponse.cs" t="Include" />
-                <e p="SignalResponse.cs" t="Include" />
-              </e>
-              <e p="ResponsesInner" t="Include">
-                <e p="GetInfoResponse.cs" t="Include" />
-                <e p="ReadChatResponse.cs" t="Include" />
-                <e p="SessionInfoResponse.cs" t="Include" />
-              </e>
-              <e p="SaveRequest.cs" t="Include" />
-              <e p="SetupRequest.cs" t="Include" />
-              <e p="Small" t="Include">
-                <e p="ChatMessage.cs" t="Include" />
-                <e p="SessionInfo.cs" t="Include" />
-              </e>
-              <e p="StopRequest.cs" t="Include" />
-            </e>
             <e p="Unit.cs" t="Include" />
             <e p="unit_factory.cs" t="Include" />
             <e p="unit_prototype.cs" t="Include" />
@@ -98,21 +83,20 @@
           <e p="MonoBehaviours" t="Include">
             <e p="Constants.cs" t="Include" />
             <e p="DebugManager.cs" t="Include" />
-            <e p="God.cs" t="Include" />
             <e p="GuiMenuManager.cs" t="Include" />
-            <e p="JsonManager.cs" t="Include" />
+          </e>
+          <e p="Singletons" t="Include">
+            <e p="God.cs" t="Include" />
             <e p="NetworkManager.cs" t="Include" />
-            <e p="SelectionManager.cs" t="Include" />
-            <e p="UnitManager.cs" t="Include" />
           </e>
-          <e p="MonoHelpers" t="Include">
-            <e p="InputFieldToPlayerPrefsBinder.cs" t="Include" />
+          <e p="Static" t="Include">
+            <e p="JsonManager.cs" t="Include" />
+            <e p="PlayerPrefsWrapper.cs" t="Include" />
+            <e p="UnityWrappeR.cs" t="Include" />
           </e>
-          <e p="Network" t="Include">
-            <e p="WebSocketHelper.cs" t="Include" />
-          </e>
-          <e p="Plugins" t="Include">
+          <e p="ThirdParty" t="Include">
             <e p="WebSocket.cs" t="Include" />
+            <e p="WebSocketHelper.cs" t="Include" />
           </e>
         </e>
         <e p="StandartCaxapexac" t="Include">

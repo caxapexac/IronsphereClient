@@ -2,6 +2,9 @@
 using JsonSchemas;
 using Network;
 using Newtonsoft.Json;
+using Singletons;
+using Static;
+using ThirdParty;
 using UnityEngine;
 
 
@@ -11,7 +14,7 @@ namespace MonoBehaviours
     {
         private void Start()
         {
-            //JsonManager.TestNetwork();
+            
         }
         
         public void Update ()
@@ -21,13 +24,13 @@ namespace MonoBehaviours
 
         public void LogIn()
         {
-            
+            God.NetworkManager.ConnectToServer();
         }
         
         public void ServerInfo()
         {
             in_server_info data = new in_server_info();
-            NetworkManager.Ws.SendString(JsonManager.Serialize(data));
+            God.NetworkManager.Send(JsonManager.Serialize(data));
         }
         
         public void GameInfo()
@@ -78,6 +81,12 @@ namespace MonoBehaviours
         public void Signal (string input)
         {
     
+        }
+        
+        [ContextMenu("Clear Player Prefs")]
+        public void ClearPlayerPrefs()
+        {
+            PlayerPrefs.DeleteAll();
         }
     }
 }
