@@ -14,6 +14,14 @@ namespace MonoBehaviours
         Lobby,
         Session,
     }
+
+
+    public enum States
+    {
+        choosing,
+        holding,
+        playing
+    }
     
     public enum Requests
     {

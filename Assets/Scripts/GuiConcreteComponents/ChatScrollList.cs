@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using JsonSchemas;
 using MonoBehaviours;
+using Static;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace HelpersConcreteComponents
+namespace GuiConcreteComponents
 {
     public class ChatScrollList : MonoBehaviour
     {
@@ -15,31 +17,16 @@ namespace HelpersConcreteComponents
 
         private static ChatScrollList _instance;
 
-        private float _lastUpdateTime;
-
         private void Awake()
         {
+            Debug.Log("Awake");
             _instance = this;
             _contentTransform = GetComponent<ScrollRect>().content;
-            _lastUpdateTime = Time.time;
         }
 
         private void Start()
         {
-            UpdateData();
-        }
-
-        private void Update()
-        {
-            if (Time.time - _lastUpdateTime > Constants.SlowUpdateDelay)
-            {
-                _lastUpdateTime = Time.time;
-                UpdateData();
-            }
-        }
-
-        public static void UpdateData()
-        {
+            Debug.Log("Start");
             in_read_chat.Send();
         }
 

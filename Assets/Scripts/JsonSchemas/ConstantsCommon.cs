@@ -15,6 +15,11 @@ namespace JsonSchemas
             
         }
 
+        public virtual bool IsValid()
+        {
+            throw new NotImplementedException(GetType() + "neeeds IsValid");
+        }
+
         public virtual void Execute()
         {
             throw new NotImplementedException(GetType() + "executing");

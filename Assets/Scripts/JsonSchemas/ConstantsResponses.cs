@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
-using HelpersConcreteComponents;
+using GuiConcreteComponents;
 using MonoBehaviours;
 using Singletons;
 using Static;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace JsonSchemas
@@ -31,16 +33,16 @@ namespace JsonSchemas
         {
             if (error != null)
             {
-                MessageBox.ShowError(error);
+                MessageBox.Error(error);
                 return;
             }
-            if (success != null) MessageBox.ShowInfo(success);
+            if (success != null) MessageBox.Info(success);
             HandleSignal();
         }
 
         public virtual void HandleSignal()
         {
-            
+            throw new NotImplementedException(GetType() + "Handling");
         }
     }
     
@@ -51,7 +53,13 @@ namespace JsonSchemas
         public override void HandleSignal()
         {
             God.NetworkManager.Users = users;
-            UnityWrapper.LoadScene(Scenes.Lobby);
+            int uid = users.FindIndex(s => s == PlayerPrefsWrapper.Get(StrPrefs.input_nickname));
+            if (uid == -1)
+            {
+                MessageBox.Error("You aren't registered. Contact administrator for additional info");
+                return;
+            }
+            PlayerPrefsWrapper.Set(IntPrefs.sender, uid);
         }
     }
 

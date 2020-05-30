@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JsonSchemas
 {
-    public class parameter_map : j_typed
+    public class parameter_map
     {
         public Dictionary<string, bool> parameters_bool; // : map<string, bool>
         public Dictionary<string, int> parameters_int; // : map<string, int>

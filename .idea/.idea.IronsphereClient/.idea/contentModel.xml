@@ -43,15 +43,19 @@
             <e p="SelectionIndicator.cs" t="Include" />
             <e p="SelectionManager.cs" t="Include" />
             <e p="UnitManager.cs" t="Include" />
+            <e p="UnityEventSystemExamples.cs" t="Include" />
           </e>
-          <e p="HelpersComponents" t="Include">
+          <e p="GuiComponents" t="Include">
             <e p="ButtonSceneLoader.cs" t="Include" />
             <e p="ButtonToIntPlayerPrefsBinder.cs" t="Include" />
+            <e p="ButtonToKeyCodeBinder.cs" t="Include" />
             <e p="ButtonToStringPlayerPrefsBinder.cs" t="Include" />
+            <e p="DragAndDrop.cs" t="Include" />
             <e p="InputFieldToPlayerPrefsBinder.cs" t="Include" />
+            <e p="SceneLoaderOnPlayerPrefs.cs" t="Include" />
             <e p="TextToStringPlayerPrefsBinder.cs" t="Include" />
           </e>
-          <e p="HelpersConcreteComponents" t="Include">
+          <e p="GuiConcreteComponents" t="Include">
             <e p="ChatScrollList.cs" t="Include" />
             <e p="ChatScrollListItem.cs" t="Include" />
             <e p="MessageBox.cs" t="Include" />
@@ -83,7 +87,7 @@
           <e p="MonoBehaviours" t="Include">
             <e p="Constants.cs" t="Include" />
             <e p="DebugManager.cs" t="Include" />
-            <e p="GuiMenuManager.cs" t="Include" />
+            <e p="PrefsCleaner.cs" t="Include" />
           </e>
           <e p="Singletons" t="Include">
             <e p="God.cs" t="Include" />
@@ -341,6 +345,6 @@
       <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
     <e p="D:\Temp\JetbrainsCache\Rider\system\extResources" t="IncludeRecursive" />
-    <e p="D:\Temp\JetbrainsCache\Rider\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_IronsphereClient.-911384905.00" t="ExcludeRecursive" />
+    <e p="D:\Temp\JetbrainsCache\Rider\system\resharper-host\local\Transient\ReSharperHost\v201\SolutionCaches\_IronsphereClient.-911384905.00" t="ExcludeRecursive" />
   </component>
 </project>

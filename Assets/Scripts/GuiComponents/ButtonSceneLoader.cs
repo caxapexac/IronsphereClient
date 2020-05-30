@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace HelpersComponents
+namespace GuiComponents
 {
     public class ButtonSceneLoader : MonoBehaviour
     {

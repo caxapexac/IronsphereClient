@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 
 
-namespace HelpersConcreteComponents
+namespace GuiConcreteComponents
 {
     [ExecuteAlways]
     public class VersionTextUpdater : MonoBehaviour

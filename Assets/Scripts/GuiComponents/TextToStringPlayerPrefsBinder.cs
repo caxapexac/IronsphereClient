@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 
 
-namespace HelpersComponents
+namespace GuiComponents
 {
     [ExecuteAlways]
     public class TextToStringPlayerPrefsBinder : MonoBehaviour
@@ -15,7 +15,7 @@ namespace HelpersComponents
         public void Awake()
         {
             _inputField = GetComponent<TMP_Text>();
-            _inputField.text = PlayerPrefs.GetString(Key.ToString(), _inputField.text);
+            _inputField.text = PlayerPrefsWrapper.Get(Key, _inputField.text);
             PlayerPrefsWrapper.StringPrefsChanged += PrefsChanged;
         }
 

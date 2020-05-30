@@ -7,10 +7,9 @@ namespace Static
     public enum StrPrefs
     {
         server_ip,
-        nickname,
-        session_name,
-        message,
-        session_info
+        input_nickname,
+        input_session_name,
+        input_message
     }
 
 
@@ -21,20 +20,21 @@ namespace Static
         chat_buffer_updates
     }
     
+    
     public static class PlayerPrefsWrapper
     {
         public static event EventHandler<(StrPrefs, string)> StringPrefsChanged;
         
         public static event EventHandler<(IntPrefs, int)> IntPrefsChanged;
 
-        public static string Get(StrPrefs stringType)
+        public static string Get(StrPrefs stringType, string defaultData = "")
         {
-            return PlayerPrefs.GetString(stringType.ToString());
+            return PlayerPrefs.GetString(stringType.ToString(), defaultData);
         }
         
-        public static int Get(IntPrefs intType)
+        public static int Get(IntPrefs intType, int defaultData = 0)
         {
-            return PlayerPrefs.GetInt(intType.ToString());
+            return PlayerPrefs.GetInt(intType.ToString(), defaultData);
         }
         
         public static void Set(StrPrefs stringType, string data)

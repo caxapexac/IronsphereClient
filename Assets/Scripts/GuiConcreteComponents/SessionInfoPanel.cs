@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 
 
-namespace HelpersConcreteComponents
+namespace GuiConcreteComponents
 {
     public class SessionInfoPanel : MonoBehaviour
     {
@@ -58,7 +58,13 @@ namespace HelpersConcreteComponents
 
                 // TODO
                 _instance.SessionData.text = "";
-                _instance.SessionData.text += $"State {current.state.GetType()}\n";
+                _instance.SessionData.text += $"State: {current.state}\n";
+                _instance.SessionData.text += $"Accounts:\n";
+                foreach (int i in current.players_uid)
+                {
+                    _instance.SessionData.text += $"{i} - {God.NetworkManager.GetUsernameById(i)}\n";
+                }
+                
                 if (game != null)
                 {
                     _instance.SessionData.text += "Users\n";
@@ -74,7 +80,7 @@ namespace HelpersConcreteComponents
 
         private void ClearPanel()
         {
-            SessionName.text = "";
+            SessionName.text = "Choose session";
             SessionData.text = "";
         }
 

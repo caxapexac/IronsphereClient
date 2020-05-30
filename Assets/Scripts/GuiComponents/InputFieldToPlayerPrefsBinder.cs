@@ -1,11 +1,9 @@
-using System;
-using MonoBehaviours;
 using Static;
 using TMPro;
 using UnityEngine;
 
 
-namespace HelpersComponents
+namespace GuiComponents
 {
     [ExecuteAlways]
     public class InputFieldToPlayerPrefsBinder : MonoBehaviour
@@ -17,7 +15,7 @@ namespace HelpersComponents
         public void Awake()
         {
             _inputField = GetComponent<TMP_InputField>();
-            _inputField.text = PlayerPrefs.GetString(Key.ToString(), _inputField.text);
+            _inputField.text = PlayerPrefsWrapper.Get(Key, _inputField.text);
             PlayerPrefsWrapper.Set(Key, _inputField.text);
             _inputField.onValueChanged.AddListener(ValueChanged);
             PlayerPrefsWrapper.StringPrefsChanged += PrefsChanged;

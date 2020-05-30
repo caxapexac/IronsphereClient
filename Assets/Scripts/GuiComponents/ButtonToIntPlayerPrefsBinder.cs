@@ -6,11 +6,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace HelpersComponents
+namespace GuiComponents
 {
     public class ButtonToIntPlayerPrefsBinder : MonoBehaviour
     {
-        public IntPrefs KeySholdExist;
+        public IntPrefs KeyShouldExist;
         public Requests Request;
 
         private Button _button;
@@ -68,14 +68,13 @@ namespace HelpersComponents
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            _button.interactable = PlayerPrefsWrapper.Get(KeySholdExist) != 0;
+            _button.interactable = PlayerPrefsWrapper.Get(KeyShouldExist) != 0;
             PlayerPrefsWrapper.IntPrefsChanged += ValueChanged;
         }
 
         private void ValueChanged(object sender, (IntPrefs, int) data)
         {
-            Debug.Log(data.Item1 + " " + data.Item2);
-            if (data.Item1 == KeySholdExist) _button.interactable = data.Item2 != 0;
+            if (data.Item1 == KeyShouldExist) _button.interactable = data.Item2 != 0;
         }
 
         private void OnDestroy()

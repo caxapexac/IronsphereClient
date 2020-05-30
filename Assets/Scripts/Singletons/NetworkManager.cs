@@ -2,7 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
-using HelpersConcreteComponents;
+using GuiConcreteComponents;
 using HybridWebSocket;
 using JsonSchemas;
 using MonoBehaviours;
@@ -54,15 +54,14 @@ namespace Singletons
         public void ConnectToServer() 
         {
             if (IsConnected()) return;
-            string ip = PlayerPrefs.GetString(StrPrefs.server_ip.ToString());
-
+            string ip = PlayerPrefsWrapper.Get(StrPrefs.server_ip);
             try
             {
                 Ws = WebSocketFactory.CreateInstance($"ws://{ip}");
             }
             catch (Exception e)
             {
-                Debug.Log(e.Message);
+                MessageBox.Error($"WebSocketFactory exception: {e.Message}");
                 return;
             }
             
@@ -77,7 +76,7 @@ namespace Singletons
         {
             if (!IsConnected())
             {
-                MessageBox.ShowError("You are not connected");
+                MessageBox.Error($"You are not connected (trying to send {message})");
                 return;
             }
             Ws.SendString(message);
@@ -90,10 +89,7 @@ namespace Singletons
                 in_connect.Send();
                 return playerId.ToString(); // TODO
             }
-            else
-            {
-                return God.NetworkManager.Users[playerId];
-            }
+            return God.NetworkManager.Users[playerId];
         }
 
         private void WsOnOpen()
@@ -109,12 +105,12 @@ namespace Singletons
 
         private void WsOnError (string errMsg)
         {
-            Debug.LogWarning("WS error: " + errMsg); // TODO messagebox
+            MessageBox.Error($"WebSocket error: {errMsg}");
         }
 
         private void WsOnClose (WebSocketCloseCode code)
         {
-            Debug.LogWarning("WS closed with code: " + code); // TODO messagebox
+            MessageBox.Info($"WebSocket closed with code: {code}");
         }
 
         private void OnDestroy()

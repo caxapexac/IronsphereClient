@@ -16,7 +16,6 @@ namespace Static
                 DiscriminatorFieldName = "type",
                 UseClassNameAsDiscriminator = true
             };
-            
         }
 
         public static string Serialize(j_typed typed)

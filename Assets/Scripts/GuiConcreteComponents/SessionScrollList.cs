@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using JsonSchemas;
 using MonoBehaviours;
@@ -6,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace HelpersConcreteComponents
+namespace GuiConcreteComponents
 {
     public class SessionScrollList : MonoBehaviour
     {
@@ -50,6 +49,7 @@ namespace HelpersConcreteComponents
         public static void DrawScrollList(Dictionary<int, session> sessions)
         {
             if (!_instance) return;
+            _instance._sessions = sessions;
             foreach (Transform child in _instance._contentTransform.transform)
             {
                 Destroy(child.gameObject);

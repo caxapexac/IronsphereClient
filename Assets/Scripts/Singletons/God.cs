@@ -22,7 +22,12 @@ namespace Singletons
             DontDestroyOnLoad(gameObject);
             I = this;
             NetworkManager = GetComponent<NetworkManager>();
-            PlayerPrefs.SetString(StrPrefs.server_ip.ToString(), Constants.Ip);
+            SetupClient();
+        }
+
+        private void SetupClient()
+        {
+            PlayerPrefsWrapper.Set(StrPrefs.server_ip, Constants.Ip);
         }
     }
 }

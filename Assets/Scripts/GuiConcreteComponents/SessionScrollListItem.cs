@@ -1,4 +1,3 @@
-using System;
 using JsonSchemas;
 using Static;
 using TMPro;
@@ -6,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace HelpersConcreteComponents
+namespace GuiConcreteComponents
 {
     public class SessionScrollListItem : MonoBehaviour
     {
@@ -25,6 +24,7 @@ namespace HelpersConcreteComponents
         private void OnButtonClick()
         {
             PlayerPrefsWrapper.Set(IntPrefs.session_id, _sessionId);
+            SessionInfoPanel.DrawPanel(null);
         }
 
         public void VisualizeData(int sessionId, session data)

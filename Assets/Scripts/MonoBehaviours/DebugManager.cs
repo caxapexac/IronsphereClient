@@ -1,4 +1,5 @@
 ﻿using System;
+using GuiConcreteComponents;
 using JsonSchemas;
 using Network;
 using Newtonsoft.Json;
@@ -14,18 +15,22 @@ namespace MonoBehaviours
     {
         private void Start()
         {
-            j_typed gi = new out_game_info();
-            string sgi = JsonManager.Serialize(gi);
-            j_typed jgi = JsonManager.Deserialize(sgi);
-            Debug.Log(sgi + " " + jgi.GetType());
-            string sgi2 = "{\"type\":\"out_game_info\"}";
-            j_typed jgi2 = JsonManager.Deserialize(sgi);
-            Debug.Log(sgi2 + " " + jgi2.GetType());
+
         }
-        
+
         public void Update ()
         {
-            
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                MessageBox.Info($"PlayerPrefs:\n"
+                    + $"{StrPrefs.input_message.ToString()} {PlayerPrefsWrapper.Get(StrPrefs.input_message)}\n"
+                    + $"{StrPrefs.input_nickname.ToString()} {PlayerPrefsWrapper.Get(StrPrefs.input_nickname)}\n"
+                    + $"{StrPrefs.server_ip.ToString()} {PlayerPrefsWrapper.Get(StrPrefs.server_ip)}\n"
+                    + $"{StrPrefs.input_session_name.ToString()} {PlayerPrefsWrapper.Get(StrPrefs.input_session_name)}\n"
+                    + $"{IntPrefs.chat_buffer_updates.ToString()} {PlayerPrefsWrapper.Get(IntPrefs.chat_buffer_updates)}\n"
+                    + $"{IntPrefs.sender.ToString()} {PlayerPrefsWrapper.Get(IntPrefs.sender)}\n"
+                    + $"{IntPrefs.session_id.ToString()} {PlayerPrefsWrapper.Get(IntPrefs.session_id)}\n");
+            }
         }
 
         public void LogIn()
