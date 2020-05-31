@@ -33,7 +33,6 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="_Temporary" t="Include">
-            <e p="Mgr.cs" t="Include" />
             <e p="NetworkUseless" t="Include">
               <e p="HttpVariousFeatures.cs" t="Include" />
               <e p="SocketVariousFeatures.cs" t="Include" />
@@ -42,61 +41,120 @@
             </e>
             <e p="SelectionIndicator.cs" t="Include" />
             <e p="SelectionManager.cs" t="Include" />
-            <e p="UnitManager.cs" t="Include" />
-            <e p="UnityEventSystemExamples.cs" t="Include" />
           </e>
-          <e p="GuiComponents" t="Include">
-            <e p="ButtonSceneLoader.cs" t="Include" />
-            <e p="ButtonToIntPlayerPrefsBinder.cs" t="Include" />
-            <e p="ButtonToKeyCodeBinder.cs" t="Include" />
-            <e p="ButtonToStringPlayerPrefsBinder.cs" t="Include" />
-            <e p="DragAndDrop.cs" t="Include" />
-            <e p="InputFieldToPlayerPrefsBinder.cs" t="Include" />
-            <e p="SceneLoaderOnPlayerPrefs.cs" t="Include" />
-            <e p="TextToStringPlayerPrefsBinder.cs" t="Include" />
+          <e p="CaxapCommon" t="Include">
+            <e p="DebugComponents" t="Include">
+              <e p="GotoSceneButtonsGenerator.cs" t="Include" />
+              <e p="UnityEventSystemExamples.cs" t="Include" />
+            </e>
+            <e p="Enums" t="Include">
+              <e p="Prefs.cs" t="Include" />
+              <e p="Requests.cs" t="Include" />
+              <e p="Scenes.cs" t="Include" />
+            </e>
+            <e p="Preferences" t="Include">
+              <e p="PrefsCleaner.cs" t="Include" />
+              <e p="RequestOnIntPlayerPrefs.cs" t="Include" />
+              <e p="RequestOnStringPlayerPrefs.cs" t="Include" />
+              <e p="SceneLoaderOnPlayerPrefs.cs" t="Include" />
+            </e>
+            <e p="Ugui" t="Include">
+              <e p="ButtonClickKeyCode.cs" t="Include" />
+              <e p="ButtonSceneLoader.cs" t="Include" />
+              <e p="ButtonSetActive.cs" t="Include" />
+              <e p="ButtonToIntPlayerPrefsBinder.cs" t="Include" />
+              <e p="ButtonToStringPlayerPrefsBinder.cs" t="Include" />
+              <e p="DragAndDrop.cs" t="Include" />
+              <e p="InputFieldToIntPlayerPrefsBinder.cs" t="Include" />
+              <e p="InputFieldToStringPlayerPrefsBinder.cs" t="Include" />
+              <e p="TextToStringPlayerPrefsBinder.cs" t="Include" />
+            </e>
+            <e p="Wrappers" t="Include">
+              <e p="JsonManager.cs" t="Include" />
+              <e p="PlayerPrefsWrapper.cs" t="Include" />
+              <e p="UnityWrappeR.cs" t="Include" />
+            </e>
           </e>
           <e p="GuiConcreteComponents" t="Include">
-            <e p="ChatScrollList.cs" t="Include" />
-            <e p="ChatScrollListItem.cs" t="Include" />
+            <e p="Lobby" t="Include">
+              <e p="SessionInfoPanel.cs" t="Include" />
+              <e p="SessionScrollList.cs" t="Include" />
+              <e p="SessionScrollListItem.cs" t="Include" />
+            </e>
+            <e p="MainMenu" t="Include">
+              <e p="VersionTextUpdater.cs" t="Include" />
+            </e>
             <e p="MessageBox.cs" t="Include" />
-            <e p="SessionInfoPanel.cs" t="Include" />
-            <e p="SessionScrollList.cs" t="Include" />
-            <e p="SessionScrollListItem.cs" t="Include" />
-            <e p="VersionTextUpdater.cs" t="Include" />
+            <e p="Session" t="Include">
+              <e p="CenterPanel.cs" t="Include" />
+              <e p="ChatScrollList.cs" t="Include" />
+              <e p="ChatScrollListItem.cs" t="Include" />
+              <e p="PlayersScrollList.cs" t="Include" />
+              <e p="PlayersScrollListItem.cs" t="Include" />
+            </e>
           </e>
           <e p="JsonSchemas" t="Include">
-            <e p="abstract_game.cs" t="Include" />
-            <e p="abstract_generator.cs" t="Include" />
-            <e p="abstract_rule.cs" t="Include" />
-            <e p="abstract_tilemap.cs" t="Include" />
-            <e p="base_tile.cs" t="Include" />
-            <e p="chat_message.cs" t="Include" />
-            <e p="command.cs" t="Include" />
+            <e p="Components" t="Include">
+              <e p="command.cs" t="Include" />
+            </e>
             <e p="ConstantsCommon.cs" t="Include" />
             <e p="ConstantsRequests.cs" t="Include" />
             <e p="ConstantsResponses.cs" t="Include" />
-            <e p="ihandler.cs" t="Include" />
-            <e p="parameter_map.cs" t="Include" />
-            <e p="player.cs" t="Include" />
-            <e p="session.cs" t="Include" />
-            <e p="Unit.cs" t="Include" />
-            <e p="unit_factory.cs" t="Include" />
-            <e p="unit_prototype.cs" t="Include" />
-            <e p="vector2.cs" t="Include" />
+            <e p="Entities" t="Include">
+              <e p="Unit.cs" t="Include" />
+              <e p="unit_factory.cs" t="Include" />
+              <e p="unit_prototype.cs" t="Include" />
+            </e>
+            <e p="Game" t="Include">
+              <e p="abstract_game.cs" t="Include" />
+              <e p="realtime.cs" t="Include" />
+              <e p="stepped.cs" t="Include" />
+            </e>
+            <e p="Generators" t="Include">
+              <e p="abstract_generator.cs" t="Include" />
+              <e p="simple.cs" t="Include" />
+            </e>
+            <e p="Online" t="Include">
+              <e p="session.cs" t="Include" />
+            </e>
+            <e p="Rules" t="Include">
+              <e p="abstract_rule.cs" t="Include" />
+              <e p="skirmish.cs" t="Include" />
+            </e>
+            <e p="Structs" t="Include">
+              <e p="chat_message.cs" t="Include" />
+              <e p="parameter_map.cs" t="Include" />
+              <e p="player.cs" t="Include" />
+              <e p="vector2.cs" t="Include" />
+            </e>
+            <e p="Tilemap" t="Include">
+              <e p="abstract_tilemap.cs" t="Include" />
+              <e p="hexagonal.cs" t="Include" />
+              <e p="square.cs" t="Include" />
+            </e>
+            <e p="Tiles" t="Include">
+              <e p="base_tile.cs" t="Include" />
+              <e p="damage_dealer.cs" t="Include" />
+              <e p="money_dealer.cs" t="Include" />
+            </e>
           </e>
           <e p="MonoBehaviours" t="Include">
             <e p="Constants.cs" t="Include" />
             <e p="DebugManager.cs" t="Include" />
-            <e p="PrefsCleaner.cs" t="Include" />
+            <e p="Elements" t="Include">
+              <e p="TileBehaviour.cs" t="Include" />
+              <e p="UnitBehaviour.cs" t="Include" />
+            </e>
+            <e p="Session" t="Include">
+              <e p="GameBehaviour.cs" t="Include" />
+              <e p="SelectionBehaviour.cs" t="Include" />
+              <e p="SessionBehaviour.cs" t="Include" />
+              <e p="TilemapBehaviour.cs" t="Include" />
+            </e>
           </e>
           <e p="Singletons" t="Include">
             <e p="God.cs" t="Include" />
             <e p="NetworkManager.cs" t="Include" />
-          </e>
-          <e p="Static" t="Include">
-            <e p="JsonManager.cs" t="Include" />
-            <e p="PlayerPrefsWrapper.cs" t="Include" />
-            <e p="UnityWrappeR.cs" t="Include" />
           </e>
           <e p="ThirdParty" t="Include">
             <e p="WebSocket.cs" t="Include" />

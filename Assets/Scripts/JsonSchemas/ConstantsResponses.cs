@@ -1,34 +1,46 @@
 using System;
 using System.Collections.Generic;
+using CaxapCommon.Enums;
+using CaxapCommon.Wrappers;
 using GuiConcreteComponents;
-using MonoBehaviours;
+using GuiConcreteComponents.Lobby;
+using GuiConcreteComponents.Session;
+using JsonSchemas.Game;
+using JsonSchemas.Online;
+using JsonSchemas.Structs;
 using Singletons;
-using Static;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using WebSocketSharp;
+
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnassignedField.Global
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedType.Global
+// ReSharper disable MemberCanBeProtected.Global
+// ReSharper disable ClassNeverInstantiated.Global
 
 
 namespace JsonSchemas
 {
     public class out_broadcast : j_typed
     {
-        public int chat_buffer_updates; // : int (to read_chat on change)
-        
+        public int chat_buffer_updates;
+
         public override void Execute()
         {
             if (PlayerPrefsWrapper.Get(IntPrefs.chat_buffer_updates) != chat_buffer_updates)
             {
                 PlayerPrefsWrapper.Set(IntPrefs.chat_buffer_updates, chat_buffer_updates);
-                in_read_chat.Send();
+                God.NetworkManager.Send(new in_read_chat());
             }
         }
     }
-    
+
     public class out_signal : j_typed
     {
-        public string error; // : string?
-        public string success; // : string?
-        
+        public string error;
+        public string success;
+
         public sealed override void Execute()
         {
             if (error != null)
@@ -36,7 +48,7 @@ namespace JsonSchemas
                 MessageBox.Error(error);
                 return;
             }
-            if (success != null) MessageBox.Info(success);
+            God.DebugManager.PlayShot();
             HandleSignal();
         }
 
@@ -45,11 +57,12 @@ namespace JsonSchemas
             throw new NotImplementedException(GetType() + "Handling");
         }
     }
-    
+
+
     public class out_connect : out_signal // js part
     {
         public List<string> users;
-        
+
         public override void HandleSignal()
         {
             God.NetworkManager.Users = users;
@@ -63,9 +76,10 @@ namespace JsonSchemas
         }
     }
 
+
     public class out_server_info : out_signal
     {
-        public Dictionary<int, session> sessions; // : map<int, session>
+        public Dictionary<int, out_session_info> sessions;
 
         public override void HandleSignal()
         {
@@ -76,7 +90,7 @@ namespace JsonSchemas
 
     public class out_read_chat : out_signal
     {
-        public List<chat_message> chat_buffer; // : queue<chat_message>?
+        public List<chat_message> chat_buffer;
 
         public override void HandleSignal()
         {
@@ -89,58 +103,69 @@ namespace JsonSchemas
     {
         public override void HandleSignal()
         {
-            in_read_chat.Send();
+            God.NetworkManager.Send(new in_read_chat());
         }
     }
-
-
+    
     public class out_create_session : out_signal
     {
-        public int session_id; // int
+        public int session_id;
 
         public override void HandleSignal()
         {
             PlayerPrefsWrapper.Set(IntPrefs.session_id, session_id);
-            in_game_join.Send();
-        }
-    }
-    
-    public class out_signal_session : out_signal
-    {
-        
-    }
-    
-    
-    public class out_game_info : out_signal_session
-    {
-        public abstract_game game_data; // : abstract_game?
-        
-        public override void HandleSignal()
-        {
-            SessionInfoPanel.DrawPanel(game_data);
+            God.NetworkManager.Send(new in_game_join());
         }
     }
 
+    public class out_signal_session : out_signal
+    {
+        // Can't recieved
+    }
+
+    public class out_session_info : out_signal_session
+    {
+        public session session;
+        
+        public override void HandleSignal()
+        {
+            session?.Execute();
+        }
+    }
+    
+    public class out_game_info : out_signal_session
+    {
+        public abstract_game game_data;
+
+        public override void HandleSignal()
+        {
+            game_data?.Execute();
+        }
+    }
 
     public class out_game_load : out_signal_session
     {
         public override void HandleSignal()
         {
-            in_game_info.Send();
+            God.NetworkManager.Send(new in_game_info());
         }
     }
 
 
     public class out_game_save : out_signal_session
     {
-        public abstract_game game; // : base_game?
-        
+        public abstract_game game;
+
         public override void HandleSignal()
         {
-            // TODO
+            if (game != null)
+            {
+                PlayerPrefsWrapper.Set(StrPrefs.data_save, JsonManager.Serialize(game));
+                MessageBox.Info("Game saved successfully");
+            }
+            God.NetworkManager.Send(new in_game_info());
         }
     }
-
 
     public class out_game_join : out_signal_session
     {
@@ -155,6 +180,7 @@ namespace JsonSchemas
     {
         public override void HandleSignal()
         {
+            MessageBox.Info(success);
             UnityWrapper.LoadScene(Scenes.Lobby);
         }
     }
@@ -164,7 +190,7 @@ namespace JsonSchemas
     {
         public override void HandleSignal()
         {
-            UnityWrapper.LoadScene(Scenes.Session);
+            God.NetworkManager.Send(new in_game_info());
         }
     }
 
@@ -173,7 +199,7 @@ namespace JsonSchemas
     {
         public override void HandleSignal()
         {
-            // TODO?
+            God.NetworkManager.Send(new in_game_info());
         }
     }
 
@@ -182,7 +208,7 @@ namespace JsonSchemas
     {
         public override void HandleSignal()
         {
-            in_game_info.Send();
+            God.NetworkManager.Send(new in_game_info());
         }
     }
 
@@ -191,7 +217,8 @@ namespace JsonSchemas
     {
         public override void HandleSignal()
         {
-            in_game_info.Send();
+            Debug.Log("Setupped");
+            God.NetworkManager.Send(new in_game_info());
         }
     }
 
@@ -200,7 +227,7 @@ namespace JsonSchemas
     {
         public override void HandleSignal()
         {
-            // TODO
+            // Nothing
         }
     }
 }

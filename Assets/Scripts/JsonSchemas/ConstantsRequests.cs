@@ -1,8 +1,19 @@
+using System;
 using System.Collections.Generic;
+using CaxapCommon.Enums;
+using CaxapCommon.Wrappers;
+using JsonSchemas.Components;
+using JsonSchemas.Game;
+using JsonSchemas.Generators;
 using MonoBehaviours;
-using Singletons;
-using Static;
-using UnityEngine;
+using MonoBehaviours.Session;
+using WebSocketSharp;
+// ReSharper disable InconsistentNaming
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable NotAccessedField.Global
+// ReSharper disable IdentifierTypo
+// ReSharper disable MemberCanBeProtected.Global
 
 
 namespace JsonSchemas
@@ -12,7 +23,7 @@ namespace JsonSchemas
         public int version;
         public string nickname;
 
-        protected in_connect()
+        public in_connect()
         {
             version = Constants.Version;
             nickname = PlayerPrefsWrapper.Get(StrPrefs.input_nickname);
@@ -20,23 +31,16 @@ namespace JsonSchemas
 
         public override bool IsValid()
         {
-            return nickname != "";
-        }
-
-        public static void Send()
-        {
-            in_connect data = new in_connect();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
+            return base.IsValid() && nickname != "";
         }
     }
     
     public class in_signal : j_typed
     {
         public int version;
-        public int sender; // : int
+        public int sender;
 
-        protected in_signal()
+        public in_signal()
         {
             version = Constants.Version;
             sender = PlayerPrefsWrapper.Get(IntPrefs.sender);
@@ -44,40 +48,29 @@ namespace JsonSchemas
         
         public override bool IsValid()
         {
-            return sender != 0;
+            if (GetType() == typeof(in_signal)) throw new NotImplementedException(GetType() + "shouldn't called");
+            return base.IsValid() && sender != 0;
         }
     }
 
 
     public class in_server_info : in_signal
     {
-        public static void Send()
-        {
-            in_server_info data = new in_server_info();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
+        // Nothing
     }
 
 
     public class in_read_chat : in_signal
     {
-        public static void Send()
-        {
-            in_read_chat data = new in_read_chat();
-            Debug.Log("sen");
-            if (!data.IsValid()) return;
-            Debug.Log("ding");
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
+        // Nothing
     }
 
 
     public class in_write_chat : in_signal
     {
-        public string message; // : string
+        public string message;
 
-        protected in_write_chat()
+        public in_write_chat()
         {
             message = PlayerPrefsWrapper.Take(StrPrefs.input_message);
         }
@@ -86,21 +79,14 @@ namespace JsonSchemas
         {
             return base.IsValid() && message != "";
         }
-
-        public static void Send()
-        {
-            in_write_chat data = new in_write_chat();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
     }
 
 
     public class in_create_session : in_signal
     {
-        public string session_name; // : string
+        public string session_name;
 
-        protected in_create_session()
+        public in_create_session()
         {
             session_name = PlayerPrefsWrapper.Take(StrPrefs.input_session_name);
         }
@@ -109,130 +95,88 @@ namespace JsonSchemas
         {
             return base.IsValid() && session_name != "";
         }
-
-        public static void Send()
-        {
-            in_create_session data = new in_create_session();
-            Debug.Log(data.IsValid() + " " + JsonManager.Serialize(data));
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
     }
 
 
     public class in_signal_session : in_signal
     {
-        public int session_id; // : int
+        public int session_id;
 
-        protected in_signal_session()
+        public in_signal_session()
         {
             session_id = PlayerPrefsWrapper.Get(IntPrefs.session_id);
         }
 
         public override bool IsValid()
         {
+            if (GetType() == typeof(in_signal)) throw new NotImplementedException(GetType() + "shouldn't called");
             return base.IsValid() && session_id != 0;
         }
     }
+    
+    public class in_session_info : in_signal_session 
+    {
+        // Nothing
+    }
+
 
 
     public class in_game_info : in_signal_session
     {
-        public static void Send()
-        {
-            in_game_info data = new in_game_info();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
+        // Nothing
     }
 
 
     public class in_game_load : in_signal_session
     {
-        public abstract_game game; // : abstract?
+        public abstract_game game;
 
-        protected in_game_load()
+        public in_game_load()
         {
-            // TODO
+            string data = PlayerPrefsWrapper.Get(StrPrefs.data_save);
+            if (!data.IsNullOrEmpty()) game = (abstract_game)JsonManager.Deserialize(data);
         }
 
         public override bool IsValid()
         {
             return base.IsValid() && game != null;
         }
-
-        public static void Send()
-        {
-            in_game_load data = new in_game_load();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
     }
 
 
     public class in_game_save : in_signal_session
     {
-        public static void Send()
-        {
-            in_game_save data = new in_game_save();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
+        // Nothing
     }
 
 
     public class in_game_join : in_signal_session
     {
-        public static void Send()
-        {
-            in_game_join data = new in_game_join();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
+        // Nothing
     }
 
 
     public class in_game_quit : in_signal_session
     {
-        public static void Send()
-        {
-            in_game_quit data = new in_game_quit();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
+        // Nothing
     }
 
 
     public class in_game_play : in_signal_session
     {
-        public static void Send()
-        {
-            in_game_play data = new in_game_play();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
+        // Nothing
     }
 
 
     public class in_game_pause : in_signal_session
     {
-        public static void Send()
-        {
-            in_game_pause data = new in_game_pause();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
+        // Nothing
     }
 
 
     public class in_game_stop : in_signal_session
     {
-        public static void Send()
-        {
-            in_game_stop data = new in_game_stop();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
+        // Nothing
     }
 
 
@@ -240,21 +184,14 @@ namespace JsonSchemas
     {
         public abstract_generator generator; // : abstract_generator
 
-        protected in_game_setup()
+        public in_game_setup()
         {
-            // TODO
+            generator = SessionBehaviour.GetGenerator();
         }
 
         public override bool IsValid()
         {
-            return base.IsValid() && generator != null;
-        }
-
-        public static void Send()
-        {
-            in_game_setup data = new in_game_setup();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
+            return base.IsValid() && generator != null && generator.IsValid();
         }
     }
 
@@ -265,24 +202,16 @@ namespace JsonSchemas
         public string component; // : string
         public command data; // : j_{command_name}
 
-        protected in_game_signal()
+        public in_game_signal(List<int> units, string component, command data)
         {
-            // units = God.I.SelectedUnits
-            // component = God.I.Action
-            // data = God.I.Payload
-            // TODO
+            this.units = units;
+            this.component = component;
+            this.data = data;
         }
 
         public override bool IsValid()
         {
             return base.IsValid() && units != null && units.Count > 0 && component != "" && data != null;
-        }
-
-        public static void Send()
-        {
-            in_game_signal data = new in_game_signal();
-            if (!data.IsValid()) return;
-            God.NetworkManager.Send(JsonManager.Serialize(data));
         }
     }
 }

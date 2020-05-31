@@ -2,11 +2,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using CaxapCommon.Enums;
+using CaxapCommon.Wrappers;
 using GuiConcreteComponents;
 using HybridWebSocket;
 using JsonSchemas;
-using MonoBehaviours;
-using Static;
 using ThirdParty;
 using UnityEngine;
 
@@ -15,11 +15,8 @@ namespace Singletons
 {
     public class NetworkManager : MonoBehaviour
     {
-        // Ws is working on another thread! 
-        public WebSocket Ws = null;
-
+        public WebSocket Ws = null; // Ws is working on another thread! 
         public ConcurrentQueue<string> EventQueue;
-
         public List<string> Users;
 
         private void Awake()
@@ -38,20 +35,20 @@ namespace Singletons
             {
                 if (EventQueue.TryDequeue(out string result))
                 {
-                    Debug.Log("Try " + result);
+                    Debug.Log("Will Try " + result + "|||");
                     j_typed response = JsonManager.Deserialize(result);
-                    Debug.Log(response.GetType() + " " + result);
+                    Debug.Log("Try " + result + "|||" + JsonManager.Serialize(response));
                     response.Execute();
                 }
             }
         }
-
-        public bool IsConnected()
-        {
-            return Ws != null && Ws.GetState() == WebSocketState.Open;
-        }
         
-        public void ConnectToServer() 
+        private void OnDestroy()
+        {
+            if (God.NetworkManager == this && IsConnected()) Ws.Close();
+        }
+
+        public void ConnectToServer()
         {
             if (IsConnected()) return;
             string ip = PlayerPrefsWrapper.Get(StrPrefs.server_ip);
@@ -64,12 +61,26 @@ namespace Singletons
                 MessageBox.Error($"WebSocketFactory exception: {e.Message}");
                 return;
             }
-            
             Ws.OnOpen += WsOnOpen;
             Ws.OnMessage += WsOnMessage;
             Ws.OnError += WsOnError;
             Ws.OnClose += WsOnClose;
             Ws.Connect();
+        }
+        
+        public bool IsConnected()
+        {
+            return Ws != null && Ws.GetState() == WebSocketState.Open;
+        }
+
+        public void Send(j_typed data)
+        {
+            if (!data.IsValid())
+            {
+                Debug.LogWarning($"Data isn't valid: {JsonManager.Serialize(data)}");
+                return;
+            }
+            Send(JsonManager.Serialize(data));
         }
 
         public void Send(string message)
@@ -79,14 +90,16 @@ namespace Singletons
                 MessageBox.Error($"You are not connected (trying to send {message})");
                 return;
             }
+            Debug.Log($"Sending {message}");
             Ws.SendString(message);
         }
 
         public string GetUsernameById(int playerId)
         {
+            if (playerId < 0) return $"LOG {playerId}";
             if (God.NetworkManager.Users.Count <= playerId)
             {
-                in_connect.Send();
+                Send(new in_connect());
                 return playerId.ToString(); // TODO
             }
             return God.NetworkManager.Users[playerId];
@@ -97,25 +110,20 @@ namespace Singletons
             Debug.Log("WS opened");
         }
 
-        private void WsOnMessage (byte[] data)
+        private void WsOnMessage(byte[] data)
         {
             string message = Encoding.UTF8.GetString(data);
             EventQueue.Enqueue(message);
         }
 
-        private void WsOnError (string errMsg)
+        private void WsOnError(string errMsg)
         {
             MessageBox.Error($"WebSocket error: {errMsg}");
         }
 
-        private void WsOnClose (WebSocketCloseCode code)
+        private void WsOnClose(WebSocketCloseCode code)
         {
             MessageBox.Info($"WebSocket closed with code: {code}");
-        }
-
-        private void OnDestroy()
-        {
-            if (God.NetworkManager == this && IsConnected()) Ws.Close();
         }
     }
 }

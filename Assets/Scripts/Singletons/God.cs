@@ -1,8 +1,7 @@
-﻿using System;
+﻿using CaxapCommon.Enums;
+using CaxapCommon.Wrappers;
 using MonoBehaviours;
-using Static;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 namespace Singletons
@@ -11,6 +10,7 @@ namespace Singletons
     {
         public static God I = null;
         public static NetworkManager NetworkManager;
+        public static DebugManager DebugManager;
 
         private void Awake()
         {
@@ -22,6 +22,7 @@ namespace Singletons
             DontDestroyOnLoad(gameObject);
             I = this;
             NetworkManager = GetComponent<NetworkManager>();
+            DebugManager = GetComponent<DebugManager>();
             SetupClient();
         }
 

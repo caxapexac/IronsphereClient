@@ -1,11 +1,9 @@
 ﻿using System;
+using CaxapCommon.Enums;
+using CaxapCommon.Wrappers;
 using GuiConcreteComponents;
 using JsonSchemas;
-using Network;
-using Newtonsoft.Json;
 using Singletons;
-using Static;
-using ThirdParty;
 using UnityEngine;
 
 
@@ -13,9 +11,16 @@ namespace MonoBehaviours
 {
     public class DebugManager : MonoBehaviour
     {
+        public AudioSource Geiger;
+
+        private void Awake()
+        {
+            Geiger = GetComponent<AudioSource>();
+        }
+
         private void Start()
         {
-
+            
         }
 
         public void Update ()
@@ -31,69 +36,23 @@ namespace MonoBehaviours
                     + $"{IntPrefs.sender.ToString()} {PlayerPrefsWrapper.Get(IntPrefs.sender)}\n"
                     + $"{IntPrefs.session_id.ToString()} {PlayerPrefsWrapper.Get(IntPrefs.session_id)}\n");
             }
-        }
-
-        public void LogIn()
-        {
-            God.NetworkManager.ConnectToServer();
-        }
-        
-        public void ServerInfo()
-        {
-            in_server_info data = new in_server_info();
-            God.NetworkManager.Send(JsonManager.Serialize(data));
-        }
-        
-        public void GameInfo()
-        {
             
+            if (Input.GetKeyDown(KeyCode.F12) && Input.GetKey(KeyCode.F2))
+            {
+                PlayerPrefs.DeleteAll();
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                God.NetworkManager.Send(new in_game_info());
+            }
         }
 
-        public void Load (string input) 
+        public void PlayShot()
         {
-            
-        }
-    
-        public void Save ()
-        {
-    
-        }
-    
-        public void Join (string input) 
-        {
-    
-        }
-    
-        public void Quit (string input) 
-        {
-    
-        }
-    
-        public void Play () 
-        {
-    
-        }
-    
-        public void Pause ()
-        {
-    
-        }
-    
-        public void Stop () 
-        {
-    
-        }
-    
-        public void Setup (string input) 
-        {
-    
+            Geiger.Play();
         }
 
-        public void Signal (string input)
-        {
-    
-        }
-        
         [ContextMenu("Clear Player Prefs")]
         public void ClearPlayerPrefs()
         {
