@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net;
 using CaxapCommon.Enums;
 using CaxapCommon.Wrappers;
 using GuiConcreteComponents;
 using JsonSchemas;
+using NativeWebSocket;
 using Singletons;
 using UnityEngine;
 
@@ -18,14 +20,54 @@ namespace MonoBehaviours
             Geiger = GetComponent<AudioSource>();
         }
 
-        private void Start()
+
+        private WebSocket websocket;
+        private async void Start()
         {
+            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+            websocket = new WebSocket("wss://163.172.163.152:1109");
+            //websocket = new WebSocket("wss://echo.websocket.org");
+
+            websocket.OnOpen += () =>
+            {
+                Debug.Log("Connection open!");
+                
+                websocket.SendText("aaaa");
+            };
+
+            websocket.OnError += (e) =>
+            {
+                Debug.Log("Error! " + e);
+            };
+
+            websocket.OnClose += (e) =>
+            {
+                Debug.Log("Connection closed!");
+            };
+
+            websocket.OnMessage += (bytes) =>
+            {
+                Debug.Log("OnMessage!");
+                Debug.Log(bytes);
+
+                // getting the message as a string
+                // var message = System.Text.Encoding.UTF8.GetString(bytes);
+                // Debug.Log("OnMessage! " + message);
+            };
+            // waiting for messages
             
+            await websocket.Connect();
+        }
+        
+        private async void OnApplicationQuit()
+        {
+            await websocket.Close();
         }
 
         public void Update ()
         {
-            if (Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.P) && Input.GetKey(KeyCode.Tab))
             {
                 MessageBox.Info($"PlayerPrefs:\n"
                     + $"{StrPrefs.input_message.ToString()} {PlayerPrefsWrapper.Get(StrPrefs.input_message)}\n"
@@ -42,9 +84,15 @@ namespace MonoBehaviours
                 PlayerPrefs.DeleteAll();
             }
 
-            if (Input.GetKeyDown(KeyCode.U))
+            if (Input.GetKeyDown(KeyCode.U) && Input.GetKey(KeyCode.Tab))
             {
                 God.NetworkManager.Send(new in_game_info());
+            }
+            
+            if (Input.GetKeyDown(KeyCode.L) && Input.GetKey(KeyCode.Tab))
+            {
+                PlayerPrefsWrapper.Set(StrPrefs.server_ip, Constants.IpLocalhost);
+                God.NetworkManager.ConnectToServer();
             }
         }
 

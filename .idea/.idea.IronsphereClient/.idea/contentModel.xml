@@ -152,13 +152,12 @@
               <e p="TilemapBehaviour.cs" t="Include" />
             </e>
           </e>
+          <e p="NativeWebSocket" t="Include">
+            <e p="WebSocket.cs" t="Include" />
+          </e>
           <e p="Singletons" t="Include">
             <e p="God.cs" t="Include" />
             <e p="NetworkManager.cs" t="Include" />
-          </e>
-          <e p="ThirdParty" t="Include">
-            <e p="WebSocket.cs" t="Include" />
-            <e p="WebSocketHelper.cs" t="Include" />
           </e>
         </e>
         <e p="StandartCaxapexac" t="Include">

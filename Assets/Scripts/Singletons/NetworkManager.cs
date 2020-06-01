@@ -5,9 +5,8 @@ using System.Text;
 using CaxapCommon.Enums;
 using CaxapCommon.Wrappers;
 using GuiConcreteComponents;
-using HybridWebSocket;
 using JsonSchemas;
-using ThirdParty;
+using NativeWebSocket;
 using UnityEngine;
 
 
@@ -54,7 +53,7 @@ namespace Singletons
             string ip = PlayerPrefsWrapper.Get(StrPrefs.server_ip);
             try
             {
-                Ws = WebSocketFactory.CreateInstance($"ws://{ip}");
+                Ws = new WebSocket($"wss://{ip}");
             }
             catch (Exception e)
             {
@@ -70,7 +69,7 @@ namespace Singletons
         
         public bool IsConnected()
         {
-            return Ws != null && Ws.GetState() == WebSocketState.Open;
+            return Ws != null && Ws.State == WebSocketState.Open;
         }
 
         public void Send(j_typed data)
@@ -91,7 +90,7 @@ namespace Singletons
                 return;
             }
             Debug.Log($"Sending {message}");
-            Ws.SendString(message);
+            Ws.SendText(message);
         }
 
         public string GetUsernameById(int playerId)
