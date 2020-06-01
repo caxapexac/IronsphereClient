@@ -24,16 +24,18 @@ namespace MonoBehaviours
         private WebSocket websocket;
         private async void Start()
         {
-            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            /*//ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-            websocket = new WebSocket("wss://163.172.163.152:1109");
+            //websocket = new WebSocket("wss://163.172.163.152:1109");
+            //websocket = new WebSocket("wss://nahui.me:1108");
+            websocket = new WebSocket("wss://nahui.me:1109");
+            //websocket = new WebSocket("wss://worldofbeat.com:1108");
+            //websocket = new WebSocket("wss://worldofbeat.com:1109");
             //websocket = new WebSocket("wss://echo.websocket.org");
 
             websocket.OnOpen += () =>
             {
                 Debug.Log("Connection open!");
-                
-                websocket.SendText("aaaa");
             };
 
             websocket.OnError += (e) =>
@@ -57,12 +59,12 @@ namespace MonoBehaviours
             };
             // waiting for messages
             
-            await websocket.Connect();
+            await websocket.Connect();*/
         }
         
         private async void OnApplicationQuit()
         {
-            await websocket.Close();
+            //await websocket.Close();
         }
 
         public void Update ()

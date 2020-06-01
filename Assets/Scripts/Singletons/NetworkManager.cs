@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using CaxapCommon.Enums;
 using CaxapCommon.Wrappers;
 using GuiConcreteComponents;
@@ -64,7 +65,7 @@ namespace Singletons
             Ws.OnMessage += WsOnMessage;
             Ws.OnError += WsOnError;
             Ws.OnClose += WsOnClose;
-            Ws.Connect();
+            Task task = Ws.Connect();
         }
         
         public bool IsConnected()
