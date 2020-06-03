@@ -19,6 +19,9 @@ namespace CaxapCommon.Enums
         chat_buffer_updates,
         setup_seed,
         setup_tilemap_scale_x,
-        setup_tilemap_scale_y
+        setup_tilemap_scale_y,
+        setup_octaves,
+        setup_persistance,
+        
     }
 }

@@ -35,17 +35,17 @@ namespace Singletons
             {
                 if (EventQueue.TryDequeue(out string result))
                 {
-                    Debug.Log("Will Try " + result + "|||");
+                    //Debug.Log("Will Try " + result + "|||");
                     j_typed response = JsonManager.Deserialize(result);
                     Debug.Log("Try " + result + "|||" + JsonManager.Serialize(response));
                     response.Execute();
                 }
             }
         }
-        
-        private void OnDestroy()
+
+        private async void OnDestroy()
         {
-            if (God.NetworkManager == this && IsConnected()) Ws.Close();
+            if (God.NetworkManager == this && IsConnected()) await Ws.Close();
         }
 
         public void ConnectToServer()
@@ -65,9 +65,9 @@ namespace Singletons
             Ws.OnMessage += WsOnMessage;
             Ws.OnError += WsOnError;
             Ws.OnClose += WsOnClose;
-            Task task = Ws.Connect();
+            Task.Run(() => Ws.Connect());
         }
-        
+
         public bool IsConnected()
         {
             return Ws != null && Ws.State == WebSocketState.Open;
@@ -91,7 +91,12 @@ namespace Singletons
                 return;
             }
             Debug.Log($"Sending {message}");
-            Ws.SendText(message);
+            Task.Run(() => SendAsync(message));
+        }
+
+        private async void SendAsync(string message)
+        {
+            await Ws.SendText(message);
         }
 
         public string GetUsernameById(int playerId)

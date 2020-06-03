@@ -30,7 +30,7 @@ namespace GuiConcreteComponents.Lobby
 
         private void PrefsChanged(object sender, (IntPrefs, int) data)
         {
-            if (data.Item1 == IntPrefs.session_id) DrawPanel(SessionScrollList.GetSessionById(data.Item2));
+            //if (data.Item1 == IntPrefs.session_id) God.NetworkManager.Send(new in_session_info());
         }
 
         private void Start()

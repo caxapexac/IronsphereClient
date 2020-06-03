@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CaxapCommon.Enums;
 using CaxapCommon.Wrappers;
+using GuiConcreteComponents;
 using JsonSchemas;
 using JsonSchemas.Generators;
 using Singletons;
@@ -39,6 +40,35 @@ namespace MonoBehaviours.Session
         {
             _instance = null;
         }
+        
+        public static void SetSessionName(string sessionName)
+        {
+            if (!_instance) return;
+            _instance._sessionName = sessionName;
+        }
+        
+        public static void SetState(string state)
+        {
+            if (!_instance) return;
+            if (state == _instance._state.ToString()) return;
+            switch (state)
+            {
+                case "choosing":
+                    _instance._state = States.choosing;
+                    break;
+                case "holding":
+                    _instance._state = States.holding;
+                    break;
+                case "playing":
+                    _instance._state = States.playing;
+                    break;
+                default:
+                    MessageBox.Error($"Unknown state: {state}");
+                    break;
+            }
+            God.NetworkManager.Send(new in_session_info());
+            God.NetworkManager.Send(new in_game_info());
+        }
 
         public static void SetPlayers(List<int> players_uid)
         {
@@ -46,20 +76,10 @@ namespace MonoBehaviours.Session
             _instance._playersUid = players_uid;
         }
 
-        public static abstract_generator GetGenerator()
+        public static List<int> GetPlayers()
         {
             if (!_instance) return null;
-            abstract_generator generator;
-            
-            // TODO
-            int seed = PlayerPrefsWrapper.Get(IntPrefs.setup_seed);
-            List<int> players_uid = _instance._playersUid;
-            int tilemap_scale_x = PlayerPrefsWrapper.Get(IntPrefs.setup_tilemap_scale_x);
-            int tilemap_scale_y = PlayerPrefsWrapper.Get(IntPrefs.setup_tilemap_scale_y);
-            generator = new simple(seed, players_uid, tilemap_scale_x, tilemap_scale_y);
-            // TODO
-
-            return generator;
+            return _instance._playersUid;
         }
     }
 }

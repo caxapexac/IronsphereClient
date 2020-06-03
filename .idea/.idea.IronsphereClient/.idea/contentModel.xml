@@ -48,6 +48,7 @@
               <e p="UnityEventSystemExamples.cs" t="Include" />
             </e>
             <e p="Enums" t="Include">
+              <e p="GeneratorType.cs" t="Include" />
               <e p="Prefs.cs" t="Include" />
               <e p="Requests.cs" t="Include" />
               <e p="Scenes.cs" t="Include" />
@@ -86,6 +87,7 @@
             </e>
             <e p="MessageBox.cs" t="Include" />
             <e p="Session" t="Include">
+              <e p="ButtonSetupGenerator.cs" t="Include" />
               <e p="CenterPanel.cs" t="Include" />
               <e p="ChatScrollList.cs" t="Include" />
               <e p="ChatScrollListItem.cs" t="Include" />
@@ -112,6 +114,7 @@
             </e>
             <e p="Generators" t="Include">
               <e p="abstract_generator.cs" t="Include" />
+              <e p="perlin.cs" t="Include" />
               <e p="simple.cs" t="Include" />
             </e>
             <e p="Online" t="Include">

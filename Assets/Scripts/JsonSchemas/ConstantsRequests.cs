@@ -8,6 +8,7 @@ using JsonSchemas.Generators;
 using MonoBehaviours;
 using MonoBehaviours.Session;
 using WebSocketSharp;
+using CaxapCommon.Enums;
 // ReSharper disable InconsistentNaming
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -184,9 +185,26 @@ namespace JsonSchemas
     {
         public abstract_generator generator; // : abstract_generator
 
-        public in_game_setup()
+        public in_game_setup(GeneratorType generatorType = GeneratorType.simple)
         {
-            generator = SessionBehaviour.GetGenerator();
+            int seed = PlayerPrefsWrapper.Get(IntPrefs.setup_seed);
+            List<int> playersUid = SessionBehaviour.GetPlayers();
+            int tilemapScaleX = PlayerPrefsWrapper.Get(IntPrefs.setup_tilemap_scale_x);
+            int tilemapScaleY = PlayerPrefsWrapper.Get(IntPrefs.setup_tilemap_scale_y);
+            
+            switch (generatorType)
+            {
+                case GeneratorType.simple:
+                    generator = new simple(seed, playersUid, tilemapScaleX, tilemapScaleY);
+                    break;
+                case GeneratorType.perlin:
+                    int octaves = PlayerPrefsWrapper.Get(IntPrefs.setup_octaves);
+                    float persistance = PlayerPrefsWrapper.Get(IntPrefs.setup_persistance) / 100f;
+                    generator = new perlin(seed, octaves, persistance, playersUid, tilemapScaleX, tilemapScaleY);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(generatorType), generatorType, null);
+            }
         }
 
         public override bool IsValid()

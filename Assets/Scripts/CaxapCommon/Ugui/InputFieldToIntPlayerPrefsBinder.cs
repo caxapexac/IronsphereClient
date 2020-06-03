@@ -33,7 +33,10 @@ namespace CaxapCommon.Ugui
 
         private void InputFieldValueChanged(string data)
         {
-            PlayerPrefsWrapper.Set(Key, int.Parse(data));
+            if (int.TryParse(data, out int result))
+            {
+                PlayerPrefsWrapper.Set(Key, result);
+            }
         }
 
         private void PrefsChanged(object sender, (IntPrefs, int) data)

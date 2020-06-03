@@ -22,7 +22,7 @@ namespace MonoBehaviours
 
 
         private WebSocket websocket;
-        private async void Start()
+        private void Start()
         {
             /*//ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -62,7 +62,7 @@ namespace MonoBehaviours
             await websocket.Connect();*/
         }
         
-        private async void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             //await websocket.Close();
         }

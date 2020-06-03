@@ -5,6 +5,7 @@ using GuiConcreteComponents.Lobby;
 using GuiConcreteComponents.Session;
 using JsonSchemas.Game;
 using MonoBehaviours.Session;
+using UnityEngine;
 using WebSocketSharp;
 // ReSharper disable InconsistentNaming
 // ReSharper disable ClassNeverInstantiated.Global
@@ -21,10 +22,11 @@ namespace JsonSchemas.Online
 
         public override void Execute()
         {
-            SessionInfoPanel.DrawPanel(this);
             if (!session_name.IsNullOrEmpty())
             {
+                SessionInfoPanel.DrawPanel(this);
                 PlayerPrefsWrapper.Set(StrPrefs.session_name, session_name);
+                SessionBehaviour.SetSessionName(session_name);
             }
             if (players_uid != null)
             {
@@ -34,6 +36,7 @@ namespace JsonSchemas.Online
             if (!state.IsNullOrEmpty())
             {
                 PlayerPrefsWrapper.Set(StrPrefs.state, state);
+                SessionBehaviour.SetState(state);
             }
             if (game != null)
             {
